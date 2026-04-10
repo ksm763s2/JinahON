@@ -1,8 +1,8 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #f3f3f3;
-  color: #111;
+  background: #121212;
+  color: #e0e0e0;
 }
 
 .player-wrap {
@@ -21,7 +21,7 @@ body {
 
 .cover-panel {
   flex: 0 0 48%;
-  background: #ececec;
+  background: #1e1e1e;
   padding: 24px;
   box-sizing: border-box;
   display: flex;
@@ -51,7 +51,7 @@ body {
   font-size: 64px;
   text-align: center;
   line-height: 1.1;
-  background: #ececec;
+  background: #1e1e1e;
 }
 
 .subtitle {
@@ -60,12 +60,12 @@ body {
   text-align: center;
   font-size: 20px;
   color: #666;
-  background: #ececec;
+  background: #1e1e1e;
 }
 
 .track-panel {
   margin-top: 2px;
-  background: #ececec;
+  background: #1e1e1e;
   padding: 20px 28px 16px;
   flex: 1;
   box-sizing: border-box;
@@ -122,7 +122,7 @@ body {
 }
 
 .audio-panel {
-  background: #ececec;
+  background: #1e1e1e;
   padding: 20px 24px;
   box-sizing: border-box;
 }
