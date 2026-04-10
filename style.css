@@ -22,7 +22,7 @@ body {
 .cover-panel {
   flex: 0 0 48%;
   background: #121212;
-  padding: 40px 24px 16px;
+  padding: 40px 10px 10px;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
