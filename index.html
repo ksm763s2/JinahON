@@ -40,15 +40,25 @@
 
     <div class="controls">
       <button class="control-btn side-btn" id="prevBtn" aria-label="이전 곡">
-        &#10094;
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="side-icon">
+          <path d="M18 6L10 12L18 18V6Z" />
+          <rect x="6" y="6" width="2" height="12" rx="1" />
+        </svg>
       </button>
-
+    
       <button class="control-btn play-btn" id="playPauseBtn" aria-label="재생">
-        <span id="playIcon">&#9654;</span>
+        <span id="playIcon" class="play-icon play-state">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="play-svg">
+            <path d="M8 6L18 12L8 18V6Z" />
+          </svg>
+        </span>
       </button>
-
+    
       <button class="control-btn side-btn" id="nextBtn" aria-label="다음 곡">
-        &#10095;
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="side-icon">
+          <path d="M6 6L14 12L6 18V6Z" />
+          <rect x="16" y="6" width="2" height="12" rx="1" />
+        </svg>
       </button>
     </div>
 
