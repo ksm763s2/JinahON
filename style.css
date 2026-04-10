@@ -6,9 +6,9 @@ body {
 }
 
 .player-wrap {
-  max-width: 1400px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 28px 32px 40px;
+  padding: 10px 10px 10px;
   box-sizing: border-box;
 }
 
