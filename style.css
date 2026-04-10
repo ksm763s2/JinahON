@@ -107,10 +107,137 @@ body {
 }
 
 .bottom-section {
-  display: grid;
-  grid-template-columns: 180px 1fr 180px;
-  gap: 24px;
+  display: block;
+}
+
+.audio-panel.custom-player {
+  background: #121212;
+  padding: 18px 22px 20px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1px solid #2a2a2a;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.progress-wrap {
+  margin-bottom: 18px;
+}
+
+#progressBar {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 3px;
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+  background: linear-gradient(to right, #1ed760 0%, #1ed760 0%, #444 0%, #444 100%);
+}
+#progressBar::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: 999px;
+  background: transparent;
+}
+
+#progressBar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -5.5px;
+  border-radius: 50%;
+  background: #1ed760;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 0 2px rgba(30, 215, 96, 0.15);
+}
+
+#progressBar::-moz-range-track {
+  height: 3px;
+  border-radius: 999px;
+  background: #444;
+}
+
+#progressBar::-moz-range-progress {
+  height: 3px;
+  border-radius: 999px;
+  background: #1ed760;
+}
+
+#progressBar::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: none;
+  border-radius: 50%;
+  background: #1ed760;
+  cursor: pointer;
+}
+
+.time-row {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+  margin-top: 7px;
+  font-size: 10px;
+  color: #6f6f6f;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+}
+
+.control-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.side-btn {
+  color: #d7d7d7;
+  font-size: 28px;
+  width: 36px;
+  height: 36px;
+  opacity: 0.9;
+}
+
+.side-btn:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.play-btn {
+  width: 54px;
+  height: 54px;
+  border: 2px solid #1ed760;
+  border-radius: 50%;
+  color: #1ed760;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+#playIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.play-btn:hover {
+  transform: scale(1.05);
+}
+
+audio {
+  display: none;
 }
 
 .nav-button {
@@ -130,11 +257,6 @@ body {
   box-sizing: border-box;
 }
 
-audio {
-  width: 100%;
-  height: 52px;
-  display: block;
-}
 
 @media (max-width: 1100px) {
   .top-section {
