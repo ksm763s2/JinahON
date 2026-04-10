@@ -1,14 +1,14 @@
 const tracks = [
   {
-    title: "01. The Way For Us",
+    title: "01. 우리의 방식",
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/01-TheWayForUs.flac"
   },
   {
-    title: "02. Good Bye",
+    title: "02. 잘 가",
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/02-GoodBye.flac"
   },
   {
-    title: "03. Flower Heart",
+    title: "03. 꽃말",
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/03-FlowerHeart.flac"
   },
   {
@@ -16,11 +16,11 @@ const tracks = [
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/04-YouAlreadyHave.flac"
   },
   {
-    title: "05. Pretend To Be",
+    title: "05. 어른처럼(with. 죠지)",
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/05-PretendToBe.flac"
   },
   {
-    title: "06. The Dreamer",
+    title: "06. 여행가",
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/06-TheDreamer.flac"
   }
 ];
