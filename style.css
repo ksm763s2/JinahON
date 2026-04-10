@@ -15,8 +15,8 @@ body {
 .top-section {
   display: flex;
   gap: 18px;
-  align-items: stretch;
-  margin-bottom: 36px;
+  align-items: start;
+  margin-bottom: 24px;
 }
 
 .cover-panel {
@@ -43,6 +43,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0;
+  min-width: 0;
 }
 
 .info-panel h1 {
@@ -67,27 +68,30 @@ body {
 .track-panel {
   margin-top: 2px;
   background: #121212;
-  padding: 20px 28px 16px;
-  flex: 1;
+  padding: 20px 20px 12px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  height: 420px;     /* 핵심: 플레이리스트 전체 높이 고정 */
+  min-height: 420px;
 }
 
 .track-panel h2 {
-  margin: 0 0 18px;
+  margin: 0 0 14px;
   text-align: center;
   font-size: 20px;
   color: #e0e0e0;
+  flex-shrink: 0;
 }
 
 #trackList {
   list-style: none;
-  padding: 0;
+  padding: 0 6px 0 0;
   margin: 0;
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
+  overflow-y: auto;   /* 핵심: 내부 스크롤 */
+  overflow-x: hidden;
 }
 
 #trackList li {
@@ -109,6 +113,19 @@ body {
 #trackList li.active {
   background: #555;
   color: #fff;
+}
+
+#trackList::-webkit-scrollbar {
+  width: 8px;
+}
+
+#trackList::-webkit-scrollbar-thumb {
+  background: #3b3b3b;
+  border-radius: 999px;
+}
+
+#trackList::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .bottom-section {
@@ -315,7 +332,8 @@ audio {
   }
 
   .track-panel {
-    min-height: 0;
+    height: 300px;      /* 모바일에서는 더 낮게 */
+    min-height: 300px;
     padding: 16px 18px 12px;
   }
 
@@ -377,6 +395,11 @@ audio {
 
   .subtitle {
     font-size: 15px;
+  }
+
+  .track-panel {
+    height: 260px;
+    min-height: 260px;
   }
 
   #trackList li {
