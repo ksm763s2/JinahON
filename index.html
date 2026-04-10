@@ -11,23 +11,25 @@
     <h1>우리의 방식</h1>
     <p class="subtitle">Mini CD Player</p>
 
-    <div class="cover">
-      <img
-        src="Images/TheWayForUs.jpg"
-        alt="앨범 커버"/>
-       <div class="right-panel">
-    <h2>Track List</h2>
-    <ul id="trackList"></ul>
-  </div>
-    </div>
+    <div class="layout">
+      <div class="cover">
+        <img
+          src="Images/TheWayForUs.jpg"
+          alt="앨범 커버"
+        />
+      </div>
 
-   
+      <div class="right-panel">
+        <audio id="audioPlayer" controls></audio>
 
-    <audio id="audioPlayer" controls></audio>
+        <div class="controls">
+          <button id="prevButton">이전 곡</button>
+          <button id="nextButton">다음 곡</button>
+        </div>
 
-    <div class="controls">
-      <button id="prevButton">이전 곡</button>
-      <button id="nextButton">다음 곡</button>
+        <h2>Track List</h2>
+        <ul id="trackList"></ul>
+      </div>
     </div>
   </div>
 
