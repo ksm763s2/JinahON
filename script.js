@@ -172,7 +172,4 @@ audioPlayer.addEventListener("ended", () => {
 });
 
 loadTrack(0, true);
-audioPlayer.play().catch(() => {
-  // 자동재생 실패 시 무시 (아래에서 처리)
-});
 
