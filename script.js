@@ -1,76 +1,83 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f4f4;
-  color: #111;
+const tracks = [
+  {
+    title: "01. The Way For Us",
+    url: "여기에_1번곡_URL"
+  },
+  {
+    title: "02. Good Bye",
+    url: "여기에_2번곡_URL"
+  },
+  {
+    title: "03. Flower Heart",
+    url: "여기에_3번곡_URL"
+  },
+  {
+    title: "04. You already have",
+    url: "여기에_4번곡_URL"
+  },
+  {
+    title: "05. Pretend To Be",
+    url: "여기에_5번곡_URL"
+  },
+  {
+    title: "06. The Dreamer",
+    url: "여기에_6번곡_URL"
+  }
+];
+
+const audioPlayer = document.getElementById("audioPlayer");
+const trackList = document.getElementById("trackList");
+const prevButton = document.getElementById("prevButton");
+const nextButton = document.getElementById("nextButton");
+
+let currentTrackIndex = 0;
+
+function loadTrack(index) {
+  currentTrackIndex = index;
+  audioPlayer.src = tracks[index].url;
+  renderTrackList();
 }
 
-.player-wrap {
-  max-width: 420px;
-  margin: 0 auto;
-  padding: 24px 16px 40px;
-  text-align: center;
+function playTrack(index) {
+  loadTrack(index);
+  audioPlayer.play();
 }
 
-h1 {
-  margin-bottom: 8px;
-  font-size: 42px;
+function renderTrackList() {
+  trackList.innerHTML = "";
+
+  tracks.forEach((track, index) => {
+    const li = document.createElement("li");
+    li.textContent = track.title;
+
+    if (index === currentTrackIndex) {
+      li.classList.add("active");
+    }
+
+    li.addEventListener("click", () => {
+      playTrack(index);
+    });
+
+    trackList.appendChild(li);
+  });
 }
 
-.subtitle {
-  margin-top: 0;
-  margin-bottom: 24px;
-  color: #666;
-}
+prevButton.addEventListener("click", () => {
+  const newIndex =
+    currentTrackIndex === 0 ? tracks.length - 1 : currentTrackIndex - 1;
+  playTrack(newIndex);
+});
 
-.cover img {
-  width: 100%;
-  max-width: 300px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-}
+nextButton.addEventListener("click", () => {
+  const newIndex =
+    currentTrackIndex === tracks.length - 1 ? 0 : currentTrackIndex + 1;
+  playTrack(newIndex);
+});
 
-audio {
-  width: 100%;
-  margin-bottom: 20px;
-}
+audioPlayer.addEventListener("ended", () => {
+  const newIndex =
+    currentTrackIndex === tracks.length - 1 ? 0 : currentTrackIndex + 1;
+  playTrack(newIndex);
+});
 
-.controls {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 24px;
-}
-
-button {
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  background: #111;
-  color: white;
-  cursor: pointer;
-}
-
-button:hover {
-  opacity: 0.9;
-}
-
-#trackList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  text-align: left;
-}
-
-#trackList li {
-  padding: 12px;
-  margin-bottom: 8px;
-  background: white;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-#trackList li.active {
-  background: #111;
-  color: white;
-}
+loadTrack(0);
