@@ -1,9 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JINAH ON</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
 <body>
-<h1>JINAH ON</h1>
-<audio controls>
-  <source src="https://github.com/ksm763s2/JinahON/releases/download/v1.0/01-TheWayForUs.flac" type="audio/flac">
-</audio>
+  <div class="player-wrap">
+    <h1>JINAH ON</h1>
+    <p class="subtitle">Mini CD Player</p>
+
+    <div class="cover">
+      <img
+        src="https://via.placeholder.com/300x300?text=JINAH+ON"
+        alt="앨범 커버"
+      />
+    </div>
+
+    <audio id="audioPlayer" controls></audio>
+
+    <div class="controls">
+      <button id="prevButton">이전 곡</button>
+      <button id="nextButton">다음 곡</button>
+    </div>
+
+    <h2>Track List</h2>
+    <ul id="trackList"></ul>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
