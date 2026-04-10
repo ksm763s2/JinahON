@@ -1,27 +1,27 @@
 const tracks = [
   {
     title: "01. The Way For Us",
-    url: "여기에_1번곡_URL"
+    url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/01-TheWayForUs.flac"
   },
   {
     title: "02. Good Bye",
-    url: "여기에_2번곡_URL"
+    url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/02-GoodBye.flac"
   },
   {
     title: "03. Flower Heart",
-    url: "여기에_3번곡_URL"
+    url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/03-FlowerHeart.flac"
   },
   {
     title: "04. You already have",
-    url: "여기에_4번곡_URL"
+    url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/04-YouAlreadyHave.flac"
   },
   {
     title: "05. Pretend To Be",
-    url: "여기에_5번곡_URL"
+    url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/05-PretendToBe.flac"
   },
   {
     title: "06. The Dreamer",
-    url: "여기에_6번곡_URL"
+    url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/06-TheDreamer.flac"
   }
 ];
 
