@@ -171,4 +171,19 @@ audioPlayer.addEventListener("ended", () => {
   playNextTrack();
 });
 
-loadTrack(0);
+loadTrack(0, true);
+audioPlayer.play().catch(() => {
+  // 자동재생 실패 시 무시 (아래에서 처리)
+});
+
+function loadTrack(index, autoPlay = false) {
+  currentTrackIndex = index;
+  audioPlayer.src = tracks[index].url;
+  audioPlayer.load();
+
+  if (autoPlay) {
+    audioPlayer.play().catch(() => {});
+  }
+
+  renderTrackList();
+}
