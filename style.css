@@ -21,8 +21,8 @@ body {
 
 .cover-panel {
   flex: 0 0 48%;
-  background: #1e1e1e;
-  padding: 24px;
+  background: #121212;
+  padding: 10px;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -51,7 +51,7 @@ body {
   font-size: 64px;
   text-align: center;
   line-height: 1.1;
-  background: #1e1e1e;
+  background: #121212;
 }
 
 .subtitle {
@@ -59,13 +59,13 @@ body {
   padding: 8px 0 14px;
   text-align: center;
   font-size: 20px;
-  color: #666;
-  background: #000000;
+  color: #222;
+  background: #121212;
 }
 
 .track-panel {
   margin-top: 2px;
-  background: #1e1e1e;
+  background: #121212;
   padding: 20px 28px 16px;
   flex: 1;
   box-sizing: border-box;
@@ -76,7 +76,7 @@ body {
 .track-panel h2 {
   margin: 0 0 18px;
   text-align: center;
-  font-size: 34px;
+  font-size: 20px;
 }
 
 #trackList {
@@ -86,6 +86,7 @@ body {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  color: #101010;
 }
 
 #trackList li {
