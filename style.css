@@ -96,11 +96,10 @@ body {
   cursor: pointer;
   font-size: 20px;
   box-sizing: border-box;
-  font-color: #fff;
+  color: #e0e0e0;
 }
 
 #trackList li.active {
-  font-color: #000;
   background: #111;
   color: #fff;
 }
