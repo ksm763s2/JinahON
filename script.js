@@ -54,9 +54,18 @@ function updateProgressBackground(value) {
 
 function updatePlayButton() {
   if (audioPlayer.paused) {
-    playIcon.innerHTML = ">";
+    playIcon.innerHTML = `
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="play-svg">
+        <path d="M8 6L18 12L8 18V6Z" />
+      </svg>
+    `;
   } else {
-    playIcon.innerHTML = "ll";
+    playIcon.innerHTML = `
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="pause-svg">
+        <rect x="6" y="5" width="4" height="14" rx="1"></rect>
+        <rect x="14" y="5" width="4" height="14" rx="1"></rect>
+      </svg>
+    `;
   }
 }
 
