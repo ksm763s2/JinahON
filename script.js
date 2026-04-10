@@ -163,13 +163,13 @@ audioPlayer.addEventListener("play", () => {
   updatePlayButton();
 });
 
+audioPlayer.addEventListener("ended", () => {
+  playNextTrack();
+});
 audioPlayer.addEventListener("pause", () => {
   updatePlayButton();
 });
 
-audioPlayer.addEventListener("ended", () => {
-  playNextTrack();
-});
 
 loadTrack(0, true);
 
