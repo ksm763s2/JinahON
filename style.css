@@ -53,7 +53,6 @@ body {
   color: #aaa;
   text-align: center;
   line-height: 1.1;
-  background: #121212;
 }
 
 .subtitle {
@@ -61,49 +60,47 @@ body {
   padding: 8px 0 14px;
   text-align: center;
   font-size: 20px;
-  color: #444;
-  background: #121212;
+  color: #666;
 }
 
 .track-panel {
   margin-top: 2px;
   background: #121212;
-  padding: 20px 20px 12px;
+  padding: 16px 16px 10px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  height: 420px;     /* 핵심: 플레이리스트 전체 높이 고정 */
-  min-height: 420px;
+  height: 280px; /* PC 기준 */
+  min-height: 280px;
 }
 
 .track-panel h2 {
-  margin: 0 0 14px;
+  margin: 0 0 12px;
   text-align: center;
-  font-size: 20px;
+  font-size: 18px;
   color: #e0e0e0;
   flex-shrink: 0;
 }
 
 #trackList {
   list-style: none;
-  padding: 0 6px 0 0;
+  padding: 0 4px 0 0;
   margin: 0;
   flex: 1;
   min-height: 0;
-  overflow-y: auto;   /* 핵심: 내부 스크롤 */
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
 #trackList li {
-  padding: 18px 16px;
-  margin-bottom: 12px;
+  padding: 12px 12px;
+  margin-bottom: 8px;
   background: #fff;
-  border-radius: 12px;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 20px;
-  box-sizing: border-box;
+  font-size: 17px;
   color: #000;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 #trackList li:hover {
@@ -115,8 +112,9 @@ body {
   color: #fff;
 }
 
+/* 스크롤바 */
 #trackList::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 #trackList::-webkit-scrollbar-thumb {
@@ -124,17 +122,14 @@ body {
   border-radius: 999px;
 }
 
-#trackList::-webkit-scrollbar-track {
-  background: transparent;
-}
-
+/* 플레이어 */
 .bottom-section {
   display: block;
 }
 
 .audio-panel.custom-player {
   background: #121212;
-  padding: 12px 16px 14px;
+  padding: 12px 14px;
   box-sizing: border-box;
   border-radius: 10px;
   border: 1px solid #2a2a2a;
@@ -143,147 +138,63 @@ body {
   margin: 0 auto;
 }
 
+/* 프로그레스 */
 .progress-wrap {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 #progressBar {
-  -webkit-appearance: none;
-  appearance: none;
   width: 100%;
-  height: 3px;
+  height: 2px;
   border-radius: 999px;
-  outline: none;
   cursor: pointer;
   background: linear-gradient(to right, #1ed760 0%, #1ed760 0%, #444 0%, #444 100%);
 }
 
-#progressBar::-webkit-slider-runnable-track {
-  height: 3px;
-  border-radius: 999px;
-  background: transparent;
-}
-
-#progressBar::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 14px;
-  height: 14px;
-  margin-top: -5.5px;
-  border-radius: 50%;
-  background: #1ed760;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 0 0 2px rgba(30, 215, 96, 0.15);
-}
-
-#progressBar::-moz-range-track {
-  height: 3px;
-  border-radius: 999px;
-  background: #444;
-}
-
-#progressBar::-moz-range-progress {
-  height: 3px;
-  border-radius: 999px;
-  background: #1ed760;
-}
-
-#progressBar::-moz-range-thumb {
-  width: 14px;
-  height: 14px;
-  border: none;
-  border-radius: 50%;
-  background: #1ed760;
-  cursor: pointer;
-}
-
+/* 시간 */
 .time-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-top: 6px;
+  margin-top: 4px;
   font-size: 13px;
-  color: #8a8a8a;
+  color: #9a9a9a;
 }
 
+/* 컨트롤 */
 .controls {
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 22px;
-}
-
-.control-btn {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  padding: 0;
-  line-height: 1;
+  gap: 20px;
 }
 
 .side-btn {
-  width: 38px;
-  height: 38px;
-  opacity: 0.9;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  width: 34px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.side-btn:hover {
-  opacity: 1;
-  transform: scale(1.06);
-}
-
 .side-icon {
-  width: 24px;
-  height: 24px;
-  display: block;
+  width: 22px;
+  height: 22px;
   fill: #d7d7d7;
 }
 
 .play-btn {
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   border: 2px solid #1ed760;
   border-radius: 50%;
-  color: #1ed760;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.play-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 0 4px rgba(30, 215, 96, 0.08);
-}
-
-#playIcon {
-  width: 24px;
-  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .play-svg {
-  width: 22px;
-  height: 22px;
-  display: block;
-  fill: none;
   stroke: #1ed760;
-  stroke-width: 1.9;
-  stroke-linejoin: round;
-}
-
-.pause-svg {
-  width: 20px;
-  height: 20px;
-  display: block;
+  fill: none;
+  stroke-width: 2;
 }
 
 .pause-svg rect {
@@ -294,90 +205,33 @@ audio {
   display: none;
 }
 
+/* ============================= */
+/* 📱 태블릿 */
+/* ============================= */
 @media (max-width: 1100px) {
   .top-section {
     flex-direction: column;
     gap: 12px;
-    margin-bottom: 24px;
-  }
-
-  .cover-panel,
-  .info-panel {
-    flex: none;
-    width: 100%;
-  }
-
-  .cover-panel {
-    padding: 10px 0;
-    justify-content: center;
-    align-items: center;
   }
 
   .cover-image {
     width: 60%;
     max-width: 260px;
-    min-width: 160px;
-    height: auto;
-    margin: 0 auto;
   }
 
   .info-panel h1 {
-    font-size: 32px;
-    padding-top: 8px;
-  }
-
-  .subtitle {
-    font-size: 16px;
-    padding: 6px 0 10px;
+    font-size: 30px;
   }
 
   .track-panel {
-    height: 300px;      /* 모바일에서는 더 낮게 */
-    min-height: 300px;
-    padding: 16px 18px 12px;
-  }
-
-  .track-panel h2 {
-    font-size: 18px;
-    margin-bottom: 14px;
-  }
-
-  #trackList li {
-    font-size: 17px;
-    padding: 14px 14px;
-    margin-bottom: 10px;
-  }
-
-  .audio-panel.custom-player {
-    width: 100%;
-    max-width: none;
-    padding: 10px 12px 12px;
-  }
-
-  .time-row {
-    font-size: 14px;
-  }
-
-  .controls {
-    gap: 18px;
-  }
-
-  .side-btn {
-    width: 34px;
-    height: 34px;
-  }
-
-  .side-icon {
-    width: 22px;
-    height: 22px;
-  }
-
-  .play-btn {
-    width: 48px;
-    height: 48px;
+    height: 180px;   /* 🔥 줄인 핵심 */
+    min-height: 180px;
   }
 }
 
+/* ============================= */
+/* 📱 모바일 */
+/* ============================= */
 @media (max-width: 600px) {
   .player-wrap {
     padding: 8px;
@@ -385,29 +239,28 @@ audio {
 
   .cover-image {
     width: 50%;
-    max-width: 220px;
-    min-width: 140px;
+    max-width: 200px;
   }
 
   .info-panel h1 {
-    font-size: 28px;
+    font-size: 26px;
   }
 
   .subtitle {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .track-panel {
-    height: 260px;
-    min-height: 260px;
+    height: 140px;   /* 🔥 최종 핵심 */
+    min-height: 140px;
   }
 
   #trackList li {
-    font-size: 16px;
-    padding: 12px 12px;
+    font-size: 15px;
+    padding: 10px;
   }
 
   .time-row {
-    font-size: 13px;
+    font-size: 12px;
   }
 }
