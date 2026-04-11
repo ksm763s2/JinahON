@@ -134,6 +134,16 @@ function updateNowPlaying() {
   nowPlayingTitle.textContent = tracks[currentTrackIndex].title;
 }
 
+function scrollToActiveTrack() {
+  const active = document.querySelector("#trackList li.active");
+  if (!active) return;
+
+  active.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+}
+
 function loadTrack(index) {
   currentTrackIndex = index;
   audioPlayer.src = tracks[index].url;
@@ -147,6 +157,7 @@ function loadTrack(index) {
   updatePlayButton();
   updateNowPlaying();
   renderTrackList();
+  scrollToActiveTrack();
 }
 
 function playTrack(index) {
