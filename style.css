@@ -15,12 +15,18 @@ body {
 .top-section {
   display: flex;
   gap: 18px;
-  align-items: start;
+  align-items: flex-start;
   margin-bottom: 24px;
 }
 
+/* 핵심: 48% + 52% 대신 유연하게 */
+.cover-panel,
+.info-panel {
+  min-width: 0;
+}
+
 .cover-panel {
-  flex: 0 0 48%;
+  flex: 1 1 420px;
   background: #121212;
   padding: 5px;
   box-sizing: border-box;
@@ -39,11 +45,10 @@ body {
 }
 
 .info-panel {
-  flex: 0 0 52%;
+  flex: 1 1 460px;
   display: flex;
   flex-direction: column;
   gap: 0;
-  min-width: 0;
 }
 
 .info-panel h1 {
@@ -53,6 +58,7 @@ body {
   color: #aaa;
   text-align: center;
   line-height: 1.1;
+  word-break: keep-all;
 }
 
 .subtitle {
@@ -70,7 +76,7 @@ body {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  height: 280px; /* PC 기준 */
+  height: 280px;
   min-height: 280px;
 }
 
@@ -93,7 +99,7 @@ body {
 }
 
 #trackList li {
-  padding: 12px 12px;
+  padding: 12px;
   margin-bottom: 8px;
   background: #fff;
   border-radius: 10px;
@@ -101,6 +107,7 @@ body {
   font-size: 17px;
   color: #000;
   transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
 #trackList li:hover {
@@ -112,7 +119,6 @@ body {
   color: #fff;
 }
 
-/* 스크롤바 */
 #trackList::-webkit-scrollbar {
   width: 6px;
 }
@@ -144,11 +150,47 @@ body {
 }
 
 #progressBar {
+  -webkit-appearance: none;
+  appearance: none;
   width: 100%;
-  height: 2px;
+  height: 4px;
   border-radius: 999px;
   cursor: pointer;
   background: linear-gradient(to right, #1ed760 0%, #1ed760 0%, #444 0%, #444 100%);
+  outline: none;
+}
+
+/* 크롬/엣지/사파리 */
+#progressBar::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: transparent;
+}
+
+#progressBar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #1ed760;
+  border: none;
+  margin-top: -4px;
+}
+
+/* 파이어폭스 */
+#progressBar::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: transparent;
+}
+
+#progressBar::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #1ed760;
+  border: none;
 }
 
 /* 시간 */
@@ -164,7 +206,18 @@ body {
 .controls {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 20px;
+}
+
+/* 버튼 기본 스타일 제거 */
+.controls button,
+.side-btn,
+.play-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
 
 .side-btn {
@@ -205,13 +258,17 @@ audio {
   display: none;
 }
 
-/* ============================= */
-/* 📱 태블릿 */
-/* ============================= */
+/* 태블릿 */
 @media (max-width: 1100px) {
   .top-section {
     flex-direction: column;
     gap: 12px;
+  }
+
+  .cover-panel,
+  .info-panel {
+    flex: none;
+    width: 100%;
   }
 
   .cover-image {
@@ -224,14 +281,12 @@ audio {
   }
 
   .track-panel {
-    height: 180px;   /* 🔥 줄인 핵심 */
+    height: 180px;
     min-height: 180px;
   }
 }
 
-/* ============================= */
-/* 📱 모바일 */
-/* ============================= */
+/* 모바일 */
 @media (max-width: 600px) {
   .player-wrap {
     padding: 8px;
@@ -251,7 +306,7 @@ audio {
   }
 
   .track-panel {
-    height: 140px;   /* 🔥 최종 핵심 */
+    height: 140px;
     min-height: 140px;
   }
 
