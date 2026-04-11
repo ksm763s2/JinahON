@@ -123,6 +123,8 @@ function renderTrackList() {
     }
 
     li.addEventListener("click", () => {
+      currentTrackIndex = index;
+      updateNowPlaying();
       playTrack(index);
     });
 
@@ -179,7 +181,7 @@ function playNextTrack() {
 
 function togglePlayPause() {
   if (!audioPlayer.src) {
-    playTrack(0);
+    playTrack(currentTrackIndex); // 0 → 현재 선택곡
     return;
   }
 
