@@ -1,31 +1,29 @@
 const tracks = [
   {
-    title: "Ⅰ. 우리의 방식  The Way For Us", 
+    title: "Ⅰ. 우리의 방식  The Way For Us",
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/01-TheWayForUs.flac"
   },
   {
-    title: "Ⅱ. 잘 가  Good Bye", 
+    title: "Ⅱ. 잘 가  Good Bye",
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/02-GoodBye.flac"
   },
   {
-    title: "Ⅲ. 꽃말  Flower Heart", 
+    title: "Ⅲ. 꽃말  Flower Heart",
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/03-FlowerHeart.flac"
   },
   {
-    title: "Ⅳ. You already have", 
+    title: "Ⅳ. You already have",
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/04-YouAlreadyHave.flac"
   },
   {
-    title: "Ⅴ. 어른처럼 (with. 죠지)  Pretend To Be", 
+    title: "Ⅴ. 어른처럼 (with. 죠지)  Pretend To Be",
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/05-PretendToBe.flac"
   },
   {
-    title: "Ⅵ. 여행가  The Dreamer", 
+    title: "Ⅵ. 여행가  The Dreamer",
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/06-TheDreamer.flac"
   }
 ];
-
-이거 
 
 const audioPlayer = document.getElementById("audioPlayer");
 const trackList = document.getElementById("trackList");
@@ -44,9 +42,7 @@ let currentTrackIndex = 0;
 function formatTime(time) {
   if (!isFinite(time)) return "0:00";
   const minutes = Math.floor(time / 60);
-  const seconds = Math.floor(time % 60)
-    .toString()
-    .padStart(2, "0");
+  const seconds = Math.floor(time % 60).toString().padStart(2, "0");
   return `${minutes}:${seconds}`;
 }
 
@@ -111,14 +107,12 @@ function playTrack(index) {
 }
 
 function playPrevTrack() {
-  const newIndex =
-    currentTrackIndex === 0 ? tracks.length - 1 : currentTrackIndex - 1;
+  const newIndex = currentTrackIndex === 0 ? tracks.length - 1 : currentTrackIndex - 1;
   playTrack(newIndex);
 }
 
 function playNextTrack() {
-  const newIndex =
-    currentTrackIndex === tracks.length - 1 ? 0 : currentTrackIndex + 1;
+  const newIndex = currentTrackIndex === tracks.length - 1 ? 0 : currentTrackIndex + 1;
   playTrack(newIndex);
 }
 
@@ -155,23 +149,12 @@ audioPlayer.addEventListener("timeupdate", () => {
 progressBar.addEventListener("input", () => {
   if (!audioPlayer.duration) return;
 
-  audioPlayer.currentTime =
-    (progressBar.value / 100) * audioPlayer.duration;
-
+  audioPlayer.currentTime = (progressBar.value / 100) * audioPlayer.duration;
   updateProgressBackground(progressBar.value);
 });
 
-audioPlayer.addEventListener("play", () => {
-  updatePlayButton();
-});
+audioPlayer.addEventListener("play", updatePlayButton);
+audioPlayer.addEventListener("pause", updatePlayButton);
+audioPlayer.addEventListener("ended", playNextTrack);
 
-audioPlayer.addEventListener("ended", () => {
-  playNextTrack();
-});
-audioPlayer.addEventListener("pause", () => {
-  updatePlayButton();
-});
-
-
-loadTrack(0, true);
-
+loadTrack(0);
