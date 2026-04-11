@@ -16,7 +16,7 @@ const tracks = [
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/04-YouAlreadyHave.flac"
   },
   {
-    title: "05. 어른처럼(with. 죠지)",
+    title: "05. 어른처럼 (with. 죠지)",
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/05-PretendToBe.flac"
   },
   {
