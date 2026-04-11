@@ -10,7 +10,7 @@
   --muted: #97a3b6;
   --accent: #1ed760;
   --track: #313844;
-  --bottom-player-height: 170px;
+  --bottom-player-height: 180px;
 }
 
 html,
@@ -29,7 +29,7 @@ body {
   overflow: hidden;
 }
 
-/* 위쪽 스크롤 영역 */
+/* 위쪽만 스크롤 */
 .player-wrap {
   width: min(100%, 1080px);
   height: 100dvh;
@@ -41,7 +41,15 @@ body {
   gap: 16px;
 }
 
-/* 상단 */
+.player-wrap::-webkit-scrollbar {
+  width: 8px;
+}
+
+.player-wrap::-webkit-scrollbar-thumb {
+  background: #38414e;
+  border-radius: 999px;
+}
+
 .top-section {
   display: grid;
   grid-template-columns: minmax(280px, 430px) 1fr;
@@ -104,7 +112,6 @@ body {
   color: var(--muted);
 }
 
-/* 플레이리스트도 본문 안에서 자연스럽게 길어지게 */
 .track-panel {
   padding: 18px;
 }
@@ -167,7 +174,7 @@ body {
   background: var(--accent);
 }
 
-/* 하단 고정 플레이어 */
+/* 하단 고정 */
 .bottom-section {
   position: fixed;
   left: 50%;
@@ -182,22 +189,13 @@ body {
 .audio-panel.custom-player {
   pointer-events: auto;
   width: 100%;
-  min-height: 140px;
+  min-height: 145px;
   padding: 18px 18px 16px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   gap: 14px;
-  background: rgba(17, 20, 24, 0.92);
-  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.35);
-}
-
-/* 현재 곡 */
-.now-playing-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-width: 0;
+  background: rgba(17, 20, 24, 0.94);
+  box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.35);
 }
 
 .now-playing-label {
@@ -216,7 +214,6 @@ body {
   text-overflow: ellipsis;
 }
 
-/* 공통 range */
 #progressBar,
 #volumeBar {
   -webkit-appearance: none;
@@ -382,17 +379,6 @@ audio {
   display: none;
 }
 
-/* 스크롤바 */
-.player-wrap::-webkit-scrollbar {
-  width: 8px;
-}
-
-.player-wrap::-webkit-scrollbar-thumb {
-  background: #38414e;
-  border-radius: 999px;
-}
-
-/* 반응형 */
 @media (max-width: 1100px) {
   .top-section {
     grid-template-columns: 1fr;
@@ -417,13 +403,6 @@ audio {
   .player-wrap {
     padding: 12px 12px calc(var(--bottom-player-height) + 18px);
     gap: 12px;
-  }
-
-  .cover-panel,
-  .info-panel,
-  .track-panel,
-  .audio-panel.custom-player {
-    border-radius: 18px;
   }
 
   .bottom-section {
