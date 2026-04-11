@@ -1,35 +1,57 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
 body {
   margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
   font-family: Arial, sans-serif;
   background: #121212;
   color: #e0e0e0;
 }
 
 .player-wrap {
-  max-width: 1000px;
+  width: min(100%, 1000px);
+  height: 100dvh;
   margin: 0 auto;
   padding: 10px;
-  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: 5fr 4fr 1fr; /* 50 / 40 / 10 */
+  gap: 14px;
 }
 
+/* 공통 */
+.top-section,
+.track-panel,
+.bottom-section {
+  min-height: 0;
+}
+
+/* ------------------------- */
+/* 상단 50% */
+/* ------------------------- */
 .top-section {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 18px;
-  align-items: flex-start;
-  margin-bottom: 24px;
+  align-items: center;
+  overflow: hidden;
 }
 
-/* 핵심: 48% + 52% 대신 유연하게 */
 .cover-panel,
 .info-panel {
   min-width: 0;
+  min-height: 0;
 }
 
 .cover-panel {
-  flex: 1 1 420px;
   background: #121212;
   padding: 5px;
-  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,24 +59,24 @@ body {
 
 .cover-image {
   width: 100%;
-  max-width: 420px;
-  height: auto;
+  max-width: min(42vh, 420px);
+  max-height: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 8px;
   display: block;
 }
 
 .info-panel {
-  flex: 1 1 460px;
   display: flex;
   flex-direction: column;
-  gap: 0;
+  justify-content: center;
+  gap: 8px;
 }
 
 .info-panel h1 {
   margin: 0;
-  padding-top: 18px;
-  font-size: 40px;
+  font-size: clamp(28px, 4vw, 40px);
   color: #aaa;
   text-align: center;
   line-height: 1.1;
@@ -63,21 +85,20 @@ body {
 
 .subtitle {
   margin: 0;
-  padding: 8px 0 14px;
   text-align: center;
-  font-size: 20px;
+  font-size: clamp(14px, 2vw, 20px);
   color: #666;
 }
 
+/* ------------------------- */
+/* 플레이리스트 40% */
+/* ------------------------- */
 .track-panel {
-  margin-top: 2px;
   background: #121212;
   padding: 16px 16px 10px;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  height: 280px;
-  min-height: 280px;
+  overflow: hidden;
 }
 
 .track-panel h2 {
@@ -106,8 +127,7 @@ body {
   cursor: pointer;
   font-size: 17px;
   color: #000;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
 
 #trackList li:hover {
@@ -128,9 +148,13 @@ body {
   border-radius: 999px;
 }
 
-/* 플레이어 */
+/* ------------------------- */
+/* 하단 플레이어 10% */
+/* ------------------------- */
 .bottom-section {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button {
@@ -142,23 +166,25 @@ button {
   margin: 0;
   font: inherit;
   color: inherit;
-  cursor: pointer
+  cursor: pointer;
 }
 
 .audio-panel.custom-player {
-  background: #121212;
-  padding: 12px 14px;
-  box-sizing: border-box;
-  border-radius: 10px;
-  border: 1px solid #2a2a2a;
   width: 100%;
   max-width: 800px;
-  margin: 0 auto;
+  height: 100%;
+  background: #121212;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #2a2a2a;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* 프로그레스 */
 .progress-wrap {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 #progressBar {
@@ -172,7 +198,6 @@ button {
   outline: none;
 }
 
-/* 크롬/엣지/사파리 */
 #progressBar::-webkit-slider-runnable-track {
   height: 4px;
   border-radius: 999px;
@@ -182,15 +207,14 @@ button {
 #progressBar::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: #1ed760;
   border: none;
-  margin-top: -4px;
+  margin-top: -5px;
 }
 
-/* 파이어폭스 */
 #progressBar::-moz-range-track {
   height: 4px;
   border-radius: 999px;
@@ -198,8 +222,8 @@ button {
 }
 
 #progressBar::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: #1ed760;
   border: none;
@@ -210,7 +234,7 @@ button {
   display: flex;
   justify-content: space-between;
   margin-top: 4px;
-  font-size: 13px;
+  font-size: 12px;
   color: #9a9a9a;
 }
 
@@ -219,22 +243,16 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 22px;
 }
 
-/* 버튼 기본 스타일 제거 */
-.controls button,
-.side-btn,
-.play-btn {
-  background: transparent;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+.control-btn {
+  flex-shrink: 0;
 }
 
 .side-btn {
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -244,11 +262,12 @@ button {
   width: 22px;
   height: 22px;
   fill: #d7d7d7;
+  display: block;
 }
 
 .play-btn {
-  width: 48px;
-  height: 48px;
+  width: 54px;
+  height: 54px;
   border: 2px solid #1ed760;
   border-radius: 50%;
   display: flex;
@@ -256,10 +275,28 @@ button {
   justify-content: center;
 }
 
+.play-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
 .play-svg {
-  stroke: #1ed760;
-  fill: none;
-  stroke-width: 2;
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.play-svg path {
+  fill: #1ed760;
+  stroke: none;
+}
+
+.pause-svg {
+  width: 24px;
+  height: 24px;
+  display: block;
 }
 
 .pause-svg rect {
@@ -270,42 +307,42 @@ audio {
   display: none;
 }
 
+/* ------------------------- */
 /* 태블릿 */
+/* ------------------------- */
 @media (max-width: 1100px) {
-  .top-section {
-    flex-direction: column;
+  .player-wrap {
     gap: 12px;
   }
 
-  .cover-panel,
-  .info-panel {
-    flex: none;
-    width: 100%;
+  .top-section {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    align-items: center;
   }
 
   .cover-image {
-    width: 60%;
+    width: min(60vw, 260px);
     max-width: 260px;
+    margin: 0 auto;
   }
 
   .info-panel h1 {
     font-size: 30px;
   }
-
-  .track-panel {
-    height: 180px;
-    min-height: 180px;
-  }
 }
 
+/* ------------------------- */
 /* 모바일 */
+/* ------------------------- */
 @media (max-width: 600px) {
   .player-wrap {
     padding: 8px;
+    gap: 10px;
   }
 
   .cover-image {
-    width: 50%;
+    width: min(50vw, 200px);
     max-width: 200px;
   }
 
@@ -317,17 +354,33 @@ audio {
     font-size: 14px;
   }
 
-  .track-panel {
-    height: 140px;
-    min-height: 140px;
-  }
-
   #trackList li {
     font-size: 15px;
     padding: 10px;
   }
 
   .time-row {
-    font-size: 12px;
+    font-size: 11px;
+  }
+
+  .side-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .play-btn {
+    width: 50px;
+    height: 50px;
+  }
+
+  .side-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .play-svg,
+  .pause-svg {
+    width: 22px;
+    height: 22px;
   }
 }
