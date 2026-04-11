@@ -128,6 +128,14 @@ function togglePlayPause() {
   }
 }
 
+const volumeBar = document.getElementById("volumeBar");
+
+volumeBar.addEventListener("input", () => {
+  audioPlayer.volume = volumeBar.value;
+});
+
+audioPlayer.volume = 1;
+
 prevBtn.addEventListener("click", playPrevTrack);
 nextBtn.addEventListener("click", playNextTrack);
 playPauseBtn.addEventListener("click", togglePlayPause);
