@@ -1,29 +1,31 @@
 const tracks = [
   {
-    title: "01. 우리의 방식",
+    title: "Ⅰ. 우리의 방식", 
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/01-TheWayForUs.flac"
   },
   {
-    title: "02. 잘 가",
+    title: "Ⅱ. 잘 가", 
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/02-GoodBye.flac"
   },
   {
-    title: "03. 꽃말",
+    title: "Ⅲ. 꽃말", 
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/03-FlowerHeart.flac"
   },
   {
-    title: "04. You already have",
+    title: "Ⅳ. You already have", 
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/04-YouAlreadyHave.flac"
   },
   {
-    title: "05. 어른처럼 (with. 죠지)",
+    title: "Ⅴ. 어른처럼 (with. 죠지)", 
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/05-PretendToBe.flac"
   },
   {
-    title: "06. 여행가",
+    title: "Ⅵ. 여행가", 
     url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/06-TheDreamer.flac"
   }
 ];
+
+이거 
 
 const audioPlayer = document.getElementById("audioPlayer");
 const trackList = document.getElementById("trackList");
