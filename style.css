@@ -318,6 +318,7 @@ body {
   align-items: center;
   gap: 12px;
   min-width: 0;
+  overflow: hidden; /* 🔥 넘침 방지 */
 }
 
 .controls-left,
@@ -413,9 +414,9 @@ button {
 .volume-box {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
-  width: min(180px, 100%);
+  gap: 8px;
+  width: auto;          /* 🔥 핵심 */
+  max-width: 140px;     /* 🔥 줄여 */
   margin-left: auto;
 }
 
