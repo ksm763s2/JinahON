@@ -21,7 +21,7 @@ body {
   margin: 0 auto;
   padding: 10px;
   display: grid;
-  grid-template-rows: 5fr 4fr 1fr; /* 50 / 40 / 10 */
+  grid-template-rows: 40fr 45fr 15fr; /* 50 / 40 / 10 */
   gap: 14px;
 }
 
@@ -38,7 +38,7 @@ body {
 .top-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 18px;
+  gap: 5px;
   align-items: center;
   overflow: hidden;
 }
@@ -59,7 +59,7 @@ body {
 
 .cover-image {
   width: 100%;
-  max-width: min(42vh, 420px);
+  max-width: min(46vh, 460px);
   max-height: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
@@ -71,7 +71,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 8px;
+  gap: 2px;
 }
 
 .info-panel h1 {
@@ -95,14 +95,14 @@ body {
 /* ------------------------- */
 .track-panel {
   background: #121212;
-  padding: 16px 16px 10px;
+  padding: 8px 16px 10px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
 .track-panel h2 {
-  margin: 0 0 12px;
+  margin: 0 0 8px;
   text-align: center;
   font-size: 18px;
   color: #e0e0e0;
@@ -342,8 +342,8 @@ audio {
   }
 
   .cover-image {
-    width: min(50vw, 200px);
-    max-width: 200px;
+    width: min(58vw, 230px);
+    max-width: 230px;
   }
 
   .info-panel h1 {
