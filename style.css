@@ -10,7 +10,7 @@
   --muted: #97a3b6;
   --accent: #1ed760;
   --track: #313844;
-  --bottom-player-height: 180px;
+  --bottom-player-height: 200px;
 }
 
 html,
@@ -34,7 +34,7 @@ body {
   width: min(100%, 1080px);
   height: 100dvh;
   margin: 0 auto;
-  padding: 18px 18px calc(var(--bottom-player-height) + 24px);
+  padding: 18px 18px calc(var(--bottom-player-height) + 44px);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -397,11 +397,11 @@ audio {
 
 @media (max-width: 700px) {
   :root {
-    --bottom-player-height: 210px;
+    --bottom-player-height: 190px;
   }
 
   .player-wrap {
-    padding: 12px 12px calc(var(--bottom-player-height) + 18px);
+    padding: 12px 12px calc(var(--bottom-player-height) + 30px);
     gap: 12px;
   }
 
