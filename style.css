@@ -65,7 +65,7 @@ body {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015));
   border: 1px solid var(--border);
   border-radius: 22px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(16px);
 }
 
 .cover-panel {
@@ -82,6 +82,20 @@ body {
   object-fit: cover;
   border-radius: 18px;
   display: block;
+  transition: transform 0.25s ease;
+}
+
+.cover-image.playing {
+  animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .info-panel {
@@ -155,7 +169,8 @@ body {
   transition:
     transform 0.18s ease,
     background 0.18s ease,
-    border-color 0.18s ease;
+    border-color 0.18s ease,
+    opacity 0.18s ease;
   line-height: 1.45;
 }
 
@@ -167,6 +182,7 @@ body {
 #trackList li.active {
   background: linear-gradient(90deg, rgba(30, 215, 96, 0.14), rgba(255, 255, 255, 0.05));
   border-color: rgba(30, 215, 96, 0.35);
+  animation: activePulse 0.35s ease;
 }
 
 #trackList li.active::before {
@@ -178,6 +194,17 @@ body {
   width: 4px;
   border-radius: 999px;
   background: var(--accent);
+}
+
+@keyframes activePulse {
+  0% {
+    transform: scale(0.96);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* 하단 고정 플레이어 */
@@ -247,6 +274,9 @@ body {
 
 #volumeBar {
   height: 4px;
+  margin: 0;
+  display: block;
+  vertical-align: middle;
 }
 
 #progressBar::-webkit-slider-runnable-track,
@@ -267,14 +297,14 @@ body {
 #volumeBar::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 14px;
-  height: 14px;
   border-radius: 50%;
   border: none;
-  margin-top: -4.5px;
 }
 
 #progressBar::-webkit-slider-thumb {
+  width: 14px;
+  height: 14px;
+  margin-top: -4.5px;
   background: var(--accent);
 }
 
@@ -316,9 +346,9 @@ body {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   min-width: 0;
-  overflow: hidden; /* 🔥 넘침 방지 */
+  overflow: hidden;
 }
 
 .controls-left,
@@ -336,7 +366,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
   white-space: nowrap;
 }
 
@@ -364,9 +394,13 @@ button {
   transform: scale(1.04);
 }
 
+.control-btn:active {
+  transform: scale(0.95);
+}
+
 .side-btn {
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.04);
   display: flex;
@@ -375,8 +409,8 @@ button {
 }
 
 .side-icon {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   fill: #d7dbe2;
 }
 
@@ -415,8 +449,8 @@ button {
   display: flex;
   align-items: center;
   gap: 8px;
-  width: auto;          /* 🔥 핵심 */
-  max-width: 140px;     /* 🔥 줄여 */
+  width: auto;
+  max-width: 140px;
   margin-left: auto;
 }
 
@@ -442,8 +476,11 @@ button {
 }
 
 .volume-wrap {
-  width: 110px;
+  width: 84px;
   max-width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
 }
 
 audio {
@@ -514,12 +551,13 @@ audio {
   }
 
   .volume-box {
-    width: min(132px, 100%);
+    max-width: 132px;
     gap: 8px;
   }
 
   .volume-wrap {
-    width: 84px;
+    width: 72px;
+    padding: 0 5px;
   }
 
   .play-btn {
