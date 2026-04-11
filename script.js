@@ -27,6 +27,8 @@ const tracks = [
 
 const audioPlayer = document.getElementById("audioPlayer");
 const trackList = document.getElementById("trackList");
+const trackCount = document.getElementById("trackCount");
+const nowPlayingTitle = document.getElementById("nowPlayingTitle");
 
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
@@ -37,7 +39,12 @@ const progressBar = document.getElementById("progressBar");
 const currentTimeEl = document.getElementById("currentTime");
 const durationEl = document.getElementById("duration");
 
+const volumeBar = document.getElementById("volumeBar");
+const muteBtn = document.getElementById("muteBtn");
+const volumeIcon = document.getElementById("volumeIcon");
+
 let currentTrackIndex = 0;
+let lastVolume = 1;
 
 function formatTime(time) {
   if (!isFinite(time)) return "0:00";
@@ -47,7 +54,12 @@ function formatTime(time) {
 }
 
 function updateProgressBackground(value) {
-  progressBar.style.background = `linear-gradient(to right, #1ed760 0%, #1ed760 ${value}%, #444 ${value}%, #444 100%)`;
+  progressBar.style.background = `linear-gradient(to right, #1ed760 0%, #1ed760 ${value}%, #313844 ${value}%, #313844 100%)`;
+}
+
+function updateVolumeBackground(value) {
+  const percent = Number(value) * 100;
+  volumeBar.style.background = `linear-gradient(to right, #ffffff 0%, #ffffff ${percent}%, #313844 ${percent}%, #313844 100%)`;
 }
 
 function updatePlayButton() {
@@ -57,6 +69,7 @@ function updatePlayButton() {
         <path d="M8 6L18 12L8 18V6Z" />
       </svg>
     `;
+    playPauseBtn.setAttribute("aria-label", "재생");
   } else {
     playIcon.innerHTML = `
       <svg viewBox="0 0 24 24" aria-hidden="true" class="pause-svg">
@@ -64,7 +77,38 @@ function updatePlayButton() {
         <rect x="14" y="5" width="4" height="14" rx="1"></rect>
       </svg>
     `;
+    playPauseBtn.setAttribute("aria-label", "일시정지");
   }
+}
+
+function updateVolumeIcon(value) {
+  const v = Number(value);
+
+  if (v === 0 || audioPlayer.muted) {
+    volumeIcon.innerHTML = `
+      <path d="M5 10V14H8L12 18V6L8 10H5Z"></path>
+      <line x1="16" y1="9" x2="20" y2="15"></line>
+      <line x1="20" y1="9" x2="16" y2="15"></line>
+    `;
+    muteBtn.setAttribute("aria-label", "음소거 해제");
+    return;
+  }
+
+  if (v < 0.5) {
+    volumeIcon.innerHTML = `
+      <path d="M5 10V14H8L12 18V6L8 10H5Z"></path>
+      <path d="M16 10.5C16.8 11.2 17.2 12 17.2 13C17.2 14 16.8 14.8 16 15.5"></path>
+    `;
+    muteBtn.setAttribute("aria-label", "음소거");
+    return;
+  }
+
+  volumeIcon.innerHTML = `
+    <path d="M5 10V14H8L12 18V6L8 10H5Z"></path>
+    <path d="M16 9C17.2 10 18 11.4 18 13C18 14.6 17.2 16 16 17"></path>
+    <path d="M14.5 6.5C16.9 8.1 18.5 10.8 18.5 13.9C18.5 17 16.9 19.7 14.5 21.3"></path>
+  `;
+  muteBtn.setAttribute("aria-label", "음소거");
 }
 
 function renderTrackList() {
@@ -86,6 +130,10 @@ function renderTrackList() {
   });
 }
 
+function updateNowPlaying() {
+  nowPlayingTitle.textContent = tracks[currentTrackIndex].title;
+}
+
 function loadTrack(index) {
   currentTrackIndex = index;
   audioPlayer.src = tracks[index].url;
@@ -94,8 +142,10 @@ function loadTrack(index) {
   currentTimeEl.textContent = "0:00";
   durationEl.textContent = "0:00";
   progressBar.value = 0;
+
   updateProgressBackground(0);
   updatePlayButton();
+  updateNowPlaying();
   renderTrackList();
 }
 
@@ -117,7 +167,10 @@ function playNextTrack() {
 }
 
 function togglePlayPause() {
-  if (!audioPlayer.src) return;
+  if (!audioPlayer.src) {
+    playTrack(0);
+    return;
+  }
 
   if (audioPlayer.paused) {
     audioPlayer.play().catch((error) => {
@@ -128,13 +181,38 @@ function togglePlayPause() {
   }
 }
 
-const volumeBar = document.getElementById("volumeBar");
+function toggleMute() {
+  if (audioPlayer.muted || audioPlayer.volume === 0) {
+    audioPlayer.muted = false;
+    audioPlayer.volume = lastVolume > 0 ? lastVolume : 1;
+    volumeBar.value = audioPlayer.volume;
+  } else {
+    lastVolume = audioPlayer.volume;
+    audioPlayer.muted = true;
+    volumeBar.value = 0;
+  }
+
+  updateVolumeBackground(volumeBar.value);
+  updateVolumeIcon(volumeBar.value);
+}
+
+trackCount.textContent = `${tracks.length} Tracks`;
 
 volumeBar.addEventListener("input", () => {
-  audioPlayer.volume = volumeBar.value;
+  const volumeValue = Number(volumeBar.value);
+
+  audioPlayer.muted = false;
+  audioPlayer.volume = volumeValue;
+
+  if (volumeValue > 0) {
+    lastVolume = volumeValue;
+  }
+
+  updateVolumeBackground(volumeValue);
+  updateVolumeIcon(volumeValue);
 });
 
-audioPlayer.volume = 1;
+muteBtn.addEventListener("click", toggleMute);
 
 prevBtn.addEventListener("click", playPrevTrack);
 nextBtn.addEventListener("click", playNextTrack);
@@ -157,7 +235,7 @@ audioPlayer.addEventListener("timeupdate", () => {
 progressBar.addEventListener("input", () => {
   if (!audioPlayer.duration) return;
 
-  audioPlayer.currentTime = (progressBar.value / 100) * audioPlayer.duration;
+  audioPlayer.currentTime = (Number(progressBar.value) / 100) * audioPlayer.duration;
   updateProgressBackground(progressBar.value);
 });
 
@@ -165,4 +243,9 @@ audioPlayer.addEventListener("play", updatePlayButton);
 audioPlayer.addEventListener("pause", updatePlayButton);
 audioPlayer.addEventListener("ended", playNextTrack);
 
+audioPlayer.volume = 1;
+volumeBar.value = 1;
+
+updateVolumeBackground(1);
+updateVolumeIcon(1);
 loadTrack(0);
