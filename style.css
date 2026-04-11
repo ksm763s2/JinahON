@@ -432,7 +432,7 @@ button {
 /* 볼륨: 재생 버튼 오른쪽 위에서 시작해서 오른쪽 끝까지 */
 .volume-box {
   position: absolute;
-  top: -4px;
+  top: -10px;
   left: calc(50% + 38px);
   right: 0;
   display: flex;
@@ -532,7 +532,7 @@ audio {
   }
 
   .volume-box {
-    top: -2px;
+    top: -8px;
     left: calc(50% + 30px);
     right: 0;
     gap: 8px;
