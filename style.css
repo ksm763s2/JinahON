@@ -86,9 +86,9 @@ body {
 }
 
 .cover-image.playing {
-  animation: spin 10s linear infinite;
-  animation-play-state: running;
-  /* animation: none; */
+  /*animation: spin 10s linear infinite;
+  animation-play-state: running;*/
+  animation: none;
 }
 
 /* 애니메이션 기능 구현 */
