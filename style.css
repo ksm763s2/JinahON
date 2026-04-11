@@ -244,7 +244,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 22px;
+  gap: 16px;
 }
 
 .control-btn {
@@ -309,13 +309,19 @@ audio {
 }
 
 .volume-wrap {
+  margin-left: auto;
   width: 100px;
 }
 
-#volumeBar {
-  width: 100%;
-  height: 4px;
+#volumeBar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #1ed760;
   cursor: pointer;
+  margin-top: -4px;
 }
 
 /* 기본 (PC 포함) */
