@@ -381,8 +381,8 @@ button {
 }
 
 .play-btn {
-  width: 62px;
-  height: 62px;
+  width: 56px;
+  height: 56px;
   border: 2px solid var(--accent);
   border-radius: 50%;
   display: flex;
