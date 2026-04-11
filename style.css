@@ -29,7 +29,7 @@ body {
   overflow: hidden;
 }
 
-/* 위쪽만 스크롤 */
+/* 위쪽 콘텐츠만 스크롤 */
 .player-wrap {
   width: min(100%, 1080px);
   height: 100dvh;
@@ -50,6 +50,7 @@ body {
   border-radius: 999px;
 }
 
+/* 상단 영역 */
 .top-section {
   display: grid;
   grid-template-columns: minmax(280px, 430px) 1fr;
@@ -61,7 +62,7 @@ body {
 .info-panel,
 .track-panel,
 .audio-panel.custom-player {
-  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015));
   border: 1px solid var(--border);
   border-radius: 22px;
   backdrop-filter: blur(10px);
@@ -112,6 +113,7 @@ body {
   color: var(--muted);
 }
 
+/* 플레이리스트 */
 .track-panel {
   padding: 18px;
 }
@@ -121,6 +123,7 @@ body {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 14px;
+  gap: 12px;
 }
 
 .track-panel h2 {
@@ -149,7 +152,10 @@ body {
   cursor: pointer;
   font-size: 15px;
   color: #f2f5f9;
-  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease;
   line-height: 1.45;
 }
 
@@ -174,7 +180,7 @@ body {
   background: var(--accent);
 }
 
-/* 하단 고정 */
+/* 하단 고정 플레이어 */
 .bottom-section {
   position: fixed;
   left: 50%;
@@ -189,13 +195,22 @@ body {
 .audio-panel.custom-player {
   pointer-events: auto;
   width: 100%;
-  min-height: 145px;
-  padding: 18px 18px 16px;
+  min-height: 132px;
+  padding: 16px 16px 14px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   background: rgba(17, 20, 24, 0.94);
   box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* 현재 재생 정보 */
+.now-playing-row {
+  min-width: 0;
+}
+
+.now-playing-meta {
+  min-width: 0;
 }
 
 .now-playing-label {
@@ -214,6 +229,7 @@ body {
   text-overflow: ellipsis;
 }
 
+/* 진행 바 / 볼륨 바 공통 */
 #progressBar,
 #volumeBar {
   -webkit-appearance: none;
@@ -240,6 +256,13 @@ body {
   border-radius: 999px;
 }
 
+#progressBar::-moz-range-track,
+#volumeBar::-moz-range-track {
+  height: inherit;
+  background: transparent;
+  border-radius: 999px;
+}
+
 #progressBar::-webkit-slider-thumb,
 #volumeBar::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -256,6 +279,27 @@ body {
 }
 
 #volumeBar::-webkit-slider-thumb {
+  width: 12px;
+  height: 12px;
+  margin-top: -4px;
+  background: #fff;
+}
+
+#progressBar::-moz-range-thumb,
+#volumeBar::-moz-range-thumb {
+  border-radius: 50%;
+  border: none;
+}
+
+#progressBar::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+}
+
+#volumeBar::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
   background: #fff;
 }
 
@@ -267,21 +311,24 @@ body {
   color: var(--muted);
 }
 
+/* 컨트롤 한 줄 */
 .controls {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 12px;
+  min-width: 0;
 }
 
 .controls-left,
 .controls-right {
   display: flex;
   align-items: center;
+  min-width: 0;
 }
 
-.controls-right {
-  justify-content: flex-end;
+.controls-left {
+  justify-content: flex-start;
 }
 
 .controls-center {
@@ -289,6 +336,11 @@ body {
   justify-content: center;
   align-items: center;
   gap: 16px;
+  white-space: nowrap;
+}
+
+.controls-right {
+  justify-content: flex-end;
 }
 
 button {
@@ -303,11 +355,19 @@ button {
   cursor: pointer;
 }
 
+.control-btn {
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+.control-btn:hover {
+  transform: scale(1.04);
+}
+
 .side-btn {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.04);
+  background: rgba(255, 255, 255, 0.04);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -330,6 +390,13 @@ button {
   background: radial-gradient(circle at center, rgba(30, 215, 96, 0.18), rgba(30, 215, 96, 0.04));
 }
 
+.play-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
 .play-svg,
 .pause-svg {
   width: 24px;
@@ -342,23 +409,25 @@ button {
   fill: var(--accent);
 }
 
+/* 볼륨 */
 .volume-box {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 10px;
-  min-width: 150px;
-  max-width: 210px;
-  width: 100%;
+  width: min(180px, 100%);
+  margin-left: auto;
 }
 
 .volume-btn {
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.04);
+  background: rgba(255, 255, 255, 0.04);
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .volume-icon {
@@ -372,13 +441,15 @@ button {
 }
 
 .volume-wrap {
-  width: 100%;
+  width: 110px;
+  max-width: 100%;
 }
 
 audio {
   display: none;
 }
 
+/* 태블릿 */
 @media (max-width: 1100px) {
   .top-section {
     grid-template-columns: 1fr;
@@ -395,14 +466,26 @@ audio {
   }
 }
 
+/* 모바일 */
 @media (max-width: 700px) {
   :root {
     --bottom-player-height: 190px;
   }
 
   .player-wrap {
-    padding: 12px 12px calc(var(--bottom-player-height) + 30px);
+    padding: 12px 12px calc(var(--bottom-player-height) + 28px);
     gap: 12px;
+  }
+
+  .cover-panel,
+  .info-panel,
+  .track-panel,
+  .audio-panel.custom-player {
+    border-radius: 18px;
+  }
+
+  .track-panel {
+    padding: 14px;
   }
 
   .bottom-section {
@@ -410,36 +493,51 @@ audio {
     padding: 0 12px 12px;
   }
 
-  .controls {
-    grid-template-columns: 1fr;
-    gap: 14px;
+  .audio-panel.custom-player {
+    min-height: 124px;
+    padding: 14px 14px 12px;
+    gap: 10px;
   }
 
-  .controls-left {
-    display: none;
+  .controls {
+    grid-template-columns: 1fr auto 1fr;
+    gap: 8px;
   }
 
   .controls-center {
-    order: 1;
+    gap: 12px;
   }
 
   .controls-right {
-    order: 2;
-    justify-content: center;
+    justify-content: flex-end;
   }
 
   .volume-box {
-    min-width: 0;
-    width: min(220px, 100%);
+    width: min(132px, 100%);
+    gap: 8px;
+  }
+
+  .volume-wrap {
+    width: 84px;
   }
 
   .play-btn {
-    width: 56px;
-    height: 56px;
+    width: 54px;
+    height: 54px;
   }
 
   .side-btn {
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .side-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  #trackList li {
+    font-size: 14px;
+    padding: 12px 14px;
   }
 }
