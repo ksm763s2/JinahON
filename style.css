@@ -310,6 +310,67 @@ audio {
 /* ------------------------- */
 /* 태블릿 */
 /* ------------------------- */
+@media (max-width: 2000px) {
+  .player-wrap {
+    gap: 12px;
+  }
+
+  .top-section {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .cover-image {
+    width: min(60vw, 700px);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .info-panel h1 {
+    font-size: 30px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  #trackList li {
+    font-size: 15px;
+    padding: 10px;
+  }
+
+  .time-row {
+    font-size: 11px;
+  }
+
+  .side-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .play-btn {
+    width: 50px;
+    height: 50px;
+  }
+
+  .side-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .play-svg,
+  .pause-svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+
+
+/* ------------------------- */
+/* 태블릿 */
+/* ------------------------- */
 @media (max-width: 1100px) {
   .player-wrap {
     gap: 12px;
@@ -322,13 +383,47 @@ audio {
   }
 
   .cover-image {
-    width: min(60vw, 260px);
-    max-width: 260px;
+    width: min(60vw, 500px);
+    max-width: 500px;
     margin: 0 auto;
   }
 
   .info-panel h1 {
     font-size: 30px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  #trackList li {
+    font-size: 15px;
+    padding: 10px;
+  }
+
+  .time-row {
+    font-size: 11px;
+  }
+
+  .side-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .play-btn {
+    width: 50px;
+    height: 50px;
+  }
+
+  .side-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .play-svg,
+  .pause-svg {
+    width: 22px;
+    height: 22px;
   }
 }
 
