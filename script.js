@@ -256,11 +256,14 @@ progressBar.addEventListener("input", () => {
 audioPlayer.addEventListener("play", () => {
   updatePlayButton();
   coverImage.classList.add("playing");
+  
+  coverImage.classList.remove("paused");
 });
 
 audioPlayer.addEventListener("pause", () => {
   updatePlayButton();
   coverImage.classList.remove("playing");
+  coverImage.classList.add("paused");
 });
 
 audioPlayer.addEventListener("ended", playNextTrack);
