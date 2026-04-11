@@ -29,6 +29,7 @@ const audioPlayer = document.getElementById("audioPlayer");
 const trackList = document.getElementById("trackList");
 const trackCount = document.getElementById("trackCount");
 const nowPlayingTitle = document.getElementById("nowPlayingTitle");
+const coverImage = document.querySelector(".cover-image");
 
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
@@ -84,7 +85,7 @@ function updatePlayButton() {
 function updateVolumeIcon(value) {
   const v = Number(value);
 
-  if (v === 0 || audioPlayer.muted) {
+  if (audioPlayer.muted || v === 0) {
     volumeIcon.innerHTML = `
       <path d="M5 10V14H8L12 18V6L8 10H5Z"></path>
       <line x1="16" y1="9" x2="20" y2="15"></line>
@@ -111,6 +112,16 @@ function updateVolumeIcon(value) {
   muteBtn.setAttribute("aria-label", "음소거");
 }
 
+function scrollToActiveTrack() {
+  const active = document.querySelector("#trackList li.active");
+  if (!active) return;
+
+  active.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+}
+
 function renderTrackList() {
   trackList.innerHTML = "";
 
@@ -134,16 +145,6 @@ function renderTrackList() {
 
 function updateNowPlaying() {
   nowPlayingTitle.textContent = tracks[currentTrackIndex].title;
-}
-
-function scrollToActiveTrack() {
-  const active = document.querySelector("#trackList li.active");
-  if (!active) return;
-
-  active.scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  });
 }
 
 function loadTrack(index) {
@@ -181,7 +182,7 @@ function playNextTrack() {
 
 function togglePlayPause() {
   if (!audioPlayer.src) {
-    playTrack(currentTrackIndex); // 0 → 현재 선택곡
+    playTrack(currentTrackIndex);
     return;
   }
 
@@ -252,9 +253,21 @@ progressBar.addEventListener("input", () => {
   updateProgressBackground(progressBar.value);
 });
 
-audioPlayer.addEventListener("play", updatePlayButton);
-audioPlayer.addEventListener("pause", updatePlayButton);
+audioPlayer.addEventListener("play", () => {
+  updatePlayButton();
+  coverImage.classList.add("playing");
+});
+
+audioPlayer.addEventListener("pause", () => {
+  updatePlayButton();
+  coverImage.classList.remove("playing");
+});
+
 audioPlayer.addEventListener("ended", playNextTrack);
+
+window.addEventListener("load", () => {
+  scrollToActiveTrack();
+});
 
 audioPlayer.volume = 1;
 volumeBar.value = 1;
