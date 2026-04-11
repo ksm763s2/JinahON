@@ -308,6 +308,16 @@ audio {
   display: none;
 }
 
+.volume-wrap {
+  width: 100px;
+}
+
+#volumeBar {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+}
+
 /* 기본 (PC 포함) */
 .box {
   font-size: 20px;
