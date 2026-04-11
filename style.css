@@ -91,6 +91,7 @@ body {
   /* animation: none; */
 }
 
+/* 애니메이션 기능 구현 */
 .cover-image.paused {
   animation-play-state: paused; 
 }
