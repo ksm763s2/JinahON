@@ -8,7 +8,8 @@
 </head>
 <body>
   <div class="player-wrap">
-    <div class="top-section">
+    <!-- 50% -->
+    <section class="top-section">
       <div class="cover-panel">
         <img
           src="Images/TheWayForUs.jpg"
@@ -18,53 +19,62 @@
       </div>
 
       <div class="info-panel">
-        <h1>우리의 방식 v2</h1>
+        <h1>우리의 방식 v3</h1>
         <p class="subtitle">Mini CD Player</p>
+      </div>
+    </section>
 
-        <div class="track-panel">
-          <h2>플레이리스트</h2>
-          <ul id="trackList"></ul>
+    <!-- 40% -->
+    <section class="track-panel">
+      <h2>플레이리스트</h2>
+      <ul id="trackList"></ul>
+    </section>
+
+    <!-- 10% -->
+    <section class="bottom-section">
+      <div class="audio-panel custom-player">
+        <div class="progress-wrap">
+          <input
+            type="range"
+            id="progressBar"
+            value="0"
+            min="0"
+            max="100"
+            step="0.1"
+          />
+          <div class="time-row">
+            <span id="currentTime">0:00</span>
+            <span id="duration">0:00</span>
+          </div>
         </div>
+
+        <div class="controls">
+          <button class="control-btn side-btn" id="prevBtn" aria-label="이전 곡" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="side-icon">
+              <path d="M18 6L10 12L18 18V6Z" />
+              <rect x="6" y="6" width="2" height="12" rx="1" />
+            </svg>
+          </button>
+
+          <button class="control-btn play-btn" id="playPauseBtn" aria-label="재생" type="button">
+            <span id="playIcon" class="play-icon play-state">
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="play-svg">
+                <path d="M8 6L18 12L8 18V6Z" />
+              </svg>
+            </span>
+          </button>
+
+          <button class="control-btn side-btn" id="nextBtn" aria-label="다음 곡" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="side-icon">
+              <path d="M6 6L14 12L6 18V6Z" />
+              <rect x="16" y="6" width="2" height="12" rx="1" />
+            </svg>
+          </button>
+        </div>
+
+        <audio id="audioPlayer"></audio>
       </div>
-    </div>
-
-    <div class="bottom-section">
-  <div class="audio-panel custom-player">
-    <div class="progress-wrap">
-      <input type="range" id="progressBar" value="0" min="0" max="100" step="0.1" />
-      <div class="time-row">
-        <span id="currentTime">0:00</span>
-        <span id="duration">0:00</span>
-      </div>
-    </div>
-
-    <div class="controls">
-      <button class="control-btn side-btn" id="prevBtn" aria-label="이전 곡">
-        <svg viewBox="0 0 24 24" aria-hidden="true" class="side-icon">
-          <path d="M18 6L10 12L18 18V6Z" />
-          <rect x="6" y="6" width="2" height="12" rx="1" />
-        </svg>
-      </button>
-    
-      <button class="control-btn play-btn" id="playPauseBtn" aria-label="재생">
-        <span id="playIcon" class="play-icon play-state">
-          <svg viewBox="0 0 24 24" aria-hidden="true" class="play-svg">
-            <path d="M8 6L18 12L8 18V6Z" />
-          </svg>
-        </span>
-      </button>
-    
-      <button class="control-btn side-btn" id="nextBtn" aria-label="다음 곡">
-        <svg viewBox="0 0 24 24" aria-hidden="true" class="side-icon">
-          <path d="M6 6L14 12L6 18V6Z" />
-          <rect x="16" y="6" width="2" height="12" rx="1" />
-        </svg>
-      </button>
-    </div>
-
-    <audio id="audioPlayer"></audio>
-  </div>
-</div>
+    </section>
   </div>
 
   <script src="script.js"></script>
