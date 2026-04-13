@@ -29,7 +29,6 @@ body {
   overflow: hidden;
 }
 
-/* 위쪽 콘텐츠만 스크롤 */
 .player-wrap {
   width: min(100%, 1080px);
   height: 100dvh;
@@ -50,7 +49,6 @@ body {
   border-radius: 999px;
 }
 
-/* 상단 */
 .top-section {
   display: grid;
   grid-template-columns: minmax(280px, 430px) 1fr;
@@ -86,23 +84,17 @@ body {
 }
 
 .cover-image.playing {
-  /*animation: spin 10s linear infinite;
-  animation-play-state: running;*/
-  animation: none;
+  animation: spin 10s linear infinite;
+  animation-play-state: running;
 }
 
-/* 애니메이션 기능 구현 */
 .cover-image.paused {
-  animation-play-state: paused; 
+  animation-play-state: paused;
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .info-panel {
@@ -134,7 +126,6 @@ body {
   color: var(--muted);
 }
 
-/* 플레이리스트 */
 .track-panel {
   padding: 18px;
 }
@@ -214,7 +205,6 @@ body {
   }
 }
 
-/* 하단 고정 플레이어 */
 .bottom-section {
   position: fixed;
   left: 50%;
@@ -238,11 +228,7 @@ body {
   box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.35);
 }
 
-/* 현재 재생 정보 */
-.now-playing-row {
-  min-width: 0;
-}
-
+.now-playing-row,
 .now-playing-meta {
   min-width: 0;
 }
@@ -263,7 +249,6 @@ body {
   text-overflow: ellipsis;
 }
 
-/* 진행 바 / 볼륨 바 */
 #progressBar,
 #volumeBar {
   -webkit-appearance: none;
@@ -283,7 +268,6 @@ body {
   height: 4px;
   margin: 0;
   display: block;
-  vertical-align: middle;
 }
 
 #progressBar::-webkit-slider-runnable-track,
@@ -348,7 +332,6 @@ body {
   color: var(--muted);
 }
 
-/* 컨트롤 */
 .controls {
   position: relative;
   display: flex;
@@ -436,7 +419,6 @@ button {
   fill: var(--accent);
 }
 
-/* 볼륨: 재생 버튼 오른쪽 위에서 시작해서 오른쪽 끝까지 */
 .volume-box {
   position: absolute;
   top: -10px;
@@ -476,11 +458,23 @@ button {
   min-width: 0;
 }
 
-audio {
-  display: none;
+/* 문서 최소 크기 조건을 지키면서 화면 밖으로 숨김 */
+#youtubePlayerHost {
+  position: fixed;
+  left: -9999px;
+  top: -9999px;
+  width: 220px;
+  height: 220px;
+  overflow: hidden;
+  opacity: 0.001;
+  pointer-events: none;
 }
 
-/* 태블릿 */
+#youtubePlayer {
+  width: 220px;
+  height: 220px;
+}
+
 @media (max-width: 1100px) {
   .top-section {
     grid-template-columns: 1fr;
@@ -497,7 +491,6 @@ audio {
   }
 }
 
-/* 모바일 */
 @media (max-width: 700px) {
   :root {
     --bottom-player-height: 200px;
