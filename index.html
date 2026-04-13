@@ -3,121 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>우리의 방식 - YouTube Playlist Test</title>
+  <title>우리의 방식 | JinahONPlayer</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="player-wrap">
-    <section class="top-section">
-      <div class="cover-panel">
+  <main class="page">
+    <section class="hero-card">
+      <div class="cover-wrap">
         <img
           src="Images/TheWayForUs.jpg"
-          alt="앨범 커버"
+          alt="권진아 우리의 방식 앨범 커버"
           class="cover-image"
         />
       </div>
 
-      <div class="info-panel">
-        <p class="album-kicker">Kwon Jin Ah</p>
+      <div class="hero-meta">
+        <p class="artist">KWON JIN AH</p>
         <h1>우리의 방식</h1>
-        <p class="subtitle">YouTube Playlist Player Test</p>
+        <p class="album-type">EP • JinahONPlayer</p>
+        <p class="description">
+          권진아 EP <strong>우리의 방식</strong>을 감상하기 위한 플레이리스트 페이지.
+          아래 플레이어에서 유튜브 공식 재생목록으로 바로 재생할 수 있어.
+        </p>
+
+        <div class="meta-pills">
+          <span class="pill">YouTube Playlist</span>
+          <span class="pill">Official Channel</span>
+          <span class="pill">Mobile Friendly</span>
+        </div>
       </div>
     </section>
 
-    <section class="track-panel">
-      <div class="track-panel-head">
-        <h2>플레이리스트</h2>
-        <span class="track-count" id="trackCount">Loading...</span>
+    <section class="player-card">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">PLAYLIST</p>
+          <h2>우리의 방식 공식 재생목록</h2>
+        </div>
       </div>
-      <ul id="trackList"></ul>
+
+      <div class="player-frame-wrap">
+        <iframe
+          class="youtube-frame"
+          src="https://www.youtube.com/embed/videoseries?list=OLAK5uy_nxQfdi3BTYk4rRbBmURXYdIWcMs6Ayp-s&controls=1&modestbranding=1&rel=0"
+          title="권진아 우리의 방식 유튜브 재생목록"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen>
+        </iframe>
+      </div>
     </section>
-  </div>
 
-  <section class="bottom-section">
-    <div class="audio-panel custom-player">
-      <div class="now-playing-row">
-        <div class="now-playing-meta">
-          <p class="now-playing-label">NOW PLAYING</p>
-          <h3 id="nowPlayingTitle">플레이리스트 불러오는 중...</h3>
+    <section class="info-card">
+      <div class="section-head compact">
+        <div>
+          <p class="section-kicker">INFO</p>
+          <h2>메모</h2>
         </div>
       </div>
 
-      <div class="progress-wrap">
-        <input
-          type="range"
-          id="progressBar"
-          value="0"
-          min="0"
-          max="100"
-          step="0.1"
-        />
-        <div class="time-row">
-          <span id="currentTime">0:00</span>
-          <span id="duration">0:00</span>
-        </div>
-      </div>
-
-      <div class="controls">
-        <div class="controls-center">
-          <button class="control-btn side-btn" id="prevBtn" aria-label="이전 곡" type="button">
-            <svg viewBox="0 0 24 24" aria-hidden="true" class="side-icon">
-              <path d="M18 6L10 12L18 18V6Z" />
-              <rect x="6" y="6" width="2" height="12" rx="1" />
-            </svg>
-          </button>
-
-          <button class="control-btn play-btn" id="playPauseBtn" aria-label="재생" type="button">
-            <span id="playIcon" class="play-icon">
-              <svg viewBox="0 0 24 24" aria-hidden="true" class="play-svg">
-                <path d="M8 6L18 12L8 18V6Z" />
-              </svg>
-            </span>
-          </button>
-
-          <button class="control-btn side-btn" id="nextBtn" aria-label="다음 곡" type="button">
-            <svg viewBox="0 0 24 24" aria-hidden="true" class="side-icon">
-              <path d="M6 6L14 12L6 18V6Z" />
-              <rect x="16" y="6" width="2" height="12" rx="1" />
-            </svg>
-          </button>
-        </div>
-
-        <div class="volume-box">
-          <button
-            class="volume-btn"
-            id="muteBtn"
-            type="button"
-            aria-label="음소거"
-            title="음소거"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true" class="volume-icon" id="volumeIcon">
-              <path d="M5 10V14H8L12 18V6L8 10H5Z"></path>
-              <path d="M16 9C17.2 10 18 11.4 18 13C18 14.6 17.2 16 16 17"></path>
-              <path d="M14.5 6.5C16.9 8.1 18.5 10.8 18.5 13.9C18.5 17 16.9 19.7 14.5 21.3"></path>
-            </svg>
-          </button>
-
-          <div class="volume-wrap">
-            <input
-              type="range"
-              id="volumeBar"
-              min="0"
-              max="1"
-              step="0.01"
-              value="1"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 문서 권장 최소 크기를 지키면서 화면 밖에 숨김 -->
-  <div id="youtubePlayerHost" aria-hidden="true">
-    <div id="youtubePlayer"></div>
-  </div>
-
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script src="script.js"></script>
+      <ul class="info-list">
+        <li>이 페이지는 커스텀 오디오 호스팅 대신 유튜브 플레이리스트 임베드 방식으로 동작함.</li>
+        <li>실제 재생, 다음 곡 이동, 목록 표시는 유튜브 플레이어가 처리함.</li>
+        <li>상단 UI는 앨범 소개용 카드로 유지하고, 플레이어 부분만 공식 임베드로 단순화함.</li>
+      </ul>
+    </section>
+  </main>
 </body>
 </html>
