@@ -1,31 +1,5 @@
-const tracks = [
-  {
-    title: "Ⅰ. 우리의 방식  The Way For Us",
-    url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/01-TheWayForUs.flac"
-  },
-  {
-    title: "Ⅱ. 잘 가  Good Bye",
-    url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/02-GoodBye.flac"
-  },
-  {
-    title: "Ⅲ. 꽃말  Flower Heart",
-    url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/03-FlowerHeart.flac"
-  },
-  {
-    title: "Ⅳ. You already have",
-    url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/04-YouAlreadyHave.flac"
-  },
-  {
-    title: "Ⅴ. 어른처럼 (with. 죠지)  Pretend To Be",
-    url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/05-PretendToBe.flac"
-  },
-  {
-    title: "Ⅵ. 여행가  The Dreamer",
-    url: "https://github.com/ksm763s2/JinahON/releases/download/v1.0/06-TheDreamer.flac"
-  }
-];
+const playlistId = "OLAK5uy_nxQfdi3BTYk4rRbBmURXYdIWcMs6Ayp-s";
 
-const audioPlayer = document.getElementById("audioPlayer");
 const trackList = document.getElementById("trackList");
 const trackCount = document.getElementById("trackCount");
 const nowPlayingTitle = document.getElementById("nowPlayingTitle");
@@ -44,34 +18,36 @@ const volumeBar = document.getElementById("volumeBar");
 const muteBtn = document.getElementById("muteBtn");
 const volumeIcon = document.getElementById("volumeIcon");
 
+let player = null;
+let tracks = [];
 let currentTrackIndex = 0;
-let lastVolume = 1;
+let lastVolume = 100;
+let progressTimer = null;
+let playlistReady = false;
+let userIsSeeking = false;
 
 function formatTime(time) {
-  if (!isFinite(time)) return "0:00";
+  if (!isFinite(time) || time < 0) return "0:00";
   const minutes = Math.floor(time / 60);
   const seconds = Math.floor(time % 60).toString().padStart(2, "0");
   return `${minutes}:${seconds}`;
 }
 
 function updateProgressBackground(value) {
-  progressBar.style.background = `linear-gradient(to right, #1ed760 0%, #1ed760 ${value}%, #313844 ${value}%, #313844 100%)`;
+  progressBar.style.background =
+    `linear-gradient(to right, #1ed760 0%, #1ed760 ${value}%, #313844 ${value}%, #313844 100%)`;
 }
 
 function updateVolumeBackground(value) {
   const percent = Number(value) * 100;
-  volumeBar.style.background = `linear-gradient(to right, #ffffff 0%, #ffffff ${percent}%, #313844 ${percent}%, #313844 100%)`;
+  volumeBar.style.background =
+    `linear-gradient(to right, #ffffff 0%, #ffffff ${percent}%, #313844 ${percent}%, #313844 100%)`;
 }
 
 function updatePlayButton() {
-  if (audioPlayer.paused) {
-    playIcon.innerHTML = `
-      <svg viewBox="0 0 24 24" aria-hidden="true" class="play-svg">
-        <path d="M8 6L18 12L8 18V6Z" />
-      </svg>
-    `;
-    playPauseBtn.setAttribute("aria-label", "재생");
-  } else {
+  const state = player?.getPlayerState?.();
+
+  if (state === YT.PlayerState.PLAYING) {
     playIcon.innerHTML = `
       <svg viewBox="0 0 24 24" aria-hidden="true" class="pause-svg">
         <rect x="6" y="5" width="4" height="14" rx="1"></rect>
@@ -79,13 +55,25 @@ function updatePlayButton() {
       </svg>
     `;
     playPauseBtn.setAttribute("aria-label", "일시정지");
+    coverImage.classList.add("playing");
+    coverImage.classList.remove("paused");
+  } else {
+    playIcon.innerHTML = `
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="play-svg">
+        <path d="M8 6L18 12L8 18V6Z" />
+      </svg>
+    `;
+    playPauseBtn.setAttribute("aria-label", "재생");
+    if (coverImage.classList.contains("playing")) {
+      coverImage.classList.add("paused");
+    }
   }
 }
 
 function updateVolumeIcon(value) {
   const v = Number(value);
 
-  if (audioPlayer.muted || v === 0) {
+  if (player?.isMuted?.() || v === 0) {
     volumeIcon.innerHTML = `
       <path d="M5 10V14H8L12 18V6L8 10H5Z"></path>
       <line x1="16" y1="9" x2="20" y2="15"></line>
@@ -112,14 +100,8 @@ function updateVolumeIcon(value) {
   muteBtn.setAttribute("aria-label", "음소거");
 }
 
-function scrollToActiveTrack() {
-  const active = document.querySelector("#trackList li.active");
-  if (!active) return;
-
-  active.scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  });
+function makeFallbackTitle(index) {
+  return `Track ${String(index + 1).padStart(2, "0")}`;
 }
 
 function renderTrackList() {
@@ -134,75 +116,150 @@ function renderTrackList() {
     }
 
     li.addEventListener("click", () => {
-      currentTrackIndex = index;
-      updateNowPlaying();
       playTrack(index);
     });
 
     trackList.appendChild(li);
   });
+
+  trackCount.textContent = `${tracks.length} Tracks`;
+}
+
+function scrollToActiveTrack() {
+  const active = document.querySelector("#trackList li.active");
+  if (!active) return;
+
+  active.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
 }
 
 function updateNowPlaying() {
-  nowPlayingTitle.textContent = tracks[currentTrackIndex].title;
+  const current = tracks[currentTrackIndex];
+  nowPlayingTitle.textContent = current ? current.title : "재생 대기 중";
 }
 
-function loadTrack(index) {
+function syncCurrentIndexFromPlayer() {
+  if (!player || !playlistReady) return;
+
+  const index = player.getPlaylistIndex();
+  if (typeof index === "number" && index >= 0 && index < tracks.length) {
+    currentTrackIndex = index;
+    updateNowPlaying();
+    renderTrackList();
+  }
+}
+
+function startProgressLoop() {
+  stopProgressLoop();
+
+  progressTimer = window.setInterval(() => {
+    if (!player || typeof player.getCurrentTime !== "function") return;
+
+    const current = player.getCurrentTime();
+    const duration = player.getDuration();
+    const progress = duration > 0 ? (current / duration) * 100 : 0;
+
+    if (!userIsSeeking) {
+      progressBar.value = progress;
+      updateProgressBackground(progress);
+    }
+
+    currentTimeEl.textContent = formatTime(current);
+    durationEl.textContent = formatTime(duration);
+    syncCurrentIndexFromPlayer();
+  }, 250);
+}
+
+function stopProgressLoop() {
+  if (progressTimer) {
+    clearInterval(progressTimer);
+    progressTimer = null;
+  }
+}
+
+function buildTracksFromPlaylist() {
+  const playlist = player.getPlaylist();
+
+  if (!Array.isArray(playlist) || playlist.length === 0) {
+    return false;
+  }
+
+  tracks = playlist.map((videoId, index) => ({
+    videoId,
+    title: makeFallbackTitle(index)
+  }));
+
+  currentTrackIndex = Math.max(0, player.getPlaylistIndex());
+  playlistReady = true;
+
+  updateNowPlaying();
+  renderTrackList();
+  scrollToActiveTrack();
+
+  return true;
+}
+
+function waitForPlaylistData(tries = 0) {
+  const ok = buildTracksFromPlaylist();
+
+  if (ok) return;
+  if (tries > 30) {
+    nowPlayingTitle.textContent = "재생목록을 불러오지 못했어요";
+    trackCount.textContent = "0 Tracks";
+    return;
+  }
+
+  setTimeout(() => waitForPlaylistData(tries + 1), 500);
+}
+
+function playTrack(index) {
+  if (!player || !playlistReady) return;
   currentTrackIndex = index;
-  audioPlayer.src = tracks[index].url;
-  audioPlayer.load();
-
-  currentTimeEl.textContent = "0:00";
-  durationEl.textContent = "0:00";
-  progressBar.value = 0;
-
-  updateProgressBackground(0);
-  updatePlayButton();
+  player.playVideoAt(index);
   updateNowPlaying();
   renderTrackList();
   scrollToActiveTrack();
 }
 
-function playTrack(index) {
-  loadTrack(index);
-  audioPlayer.play().catch((error) => {
-    console.error("재생 실패:", error);
-  });
-}
-
 function playPrevTrack() {
-  const newIndex = currentTrackIndex === 0 ? tracks.length - 1 : currentTrackIndex - 1;
-  playTrack(newIndex);
+  if (!player || !playlistReady) return;
+  player.previousVideo();
 }
 
 function playNextTrack() {
-  const newIndex = currentTrackIndex === tracks.length - 1 ? 0 : currentTrackIndex + 1;
-  playTrack(newIndex);
+  if (!player || !playlistReady) return;
+  player.nextVideo();
 }
 
 function togglePlayPause() {
-  if (!audioPlayer.src) {
-    playTrack(currentTrackIndex);
-    return;
-  }
+  if (!player) return;
 
-  if (audioPlayer.paused) {
-    audioPlayer.play().catch((error) => {
-      console.error("재생 실패:", error);
-    });
-  } else {
-    audioPlayer.pause();
+  const state = player.getPlayerState();
+
+  if (
+    state === YT.PlayerState.UNSTARTED ||
+    state === YT.PlayerState.CUED ||
+    state === YT.PlayerState.PAUSED
+  ) {
+    player.playVideo();
+  } else if (state === YT.PlayerState.PLAYING) {
+    player.pauseVideo();
   }
 }
 
 function toggleMute() {
-  if (audioPlayer.muted || audioPlayer.volume === 0) {
-    audioPlayer.muted = false;
-    audioPlayer.volume = lastVolume > 0 ? lastVolume : 1;
-    volumeBar.value = audioPlayer.volume;
+  if (!player) return;
+
+  if (player.isMuted() || player.getVolume() === 0) {
+    player.unMute();
+    const restoreVolume = lastVolume > 0 ? lastVolume : 100;
+    player.setVolume(restoreVolume);
+    volumeBar.value = restoreVolume / 100;
   } else {
-    lastVolume = audioPlayer.volume;
-    audioPlayer.muted = true;
+    lastVolume = player.getVolume();
+    player.mute();
     volumeBar.value = 0;
   }
 
@@ -210,71 +267,98 @@ function toggleMute() {
   updateVolumeIcon(volumeBar.value);
 }
 
-trackCount.textContent = `${tracks.length} Tracks`;
+function onPlayerReady(event) {
+  event.target.setVolume(100);
+  updateVolumeBackground(1);
+  updateVolumeIcon(1);
+  waitForPlaylistData();
+  startProgressLoop();
+}
 
-volumeBar.addEventListener("input", () => {
-  const volumeValue = Number(volumeBar.value);
+function onPlayerStateChange(event) {
+  updatePlayButton();
 
-  audioPlayer.muted = false;
-  audioPlayer.volume = volumeValue;
-
-  if (volumeValue > 0) {
-    lastVolume = volumeValue;
+  if (
+    event.data === YT.PlayerState.PLAYING ||
+    event.data === YT.PlayerState.PAUSED ||
+    event.data === YT.PlayerState.CUED
+  ) {
+    syncCurrentIndexFromPlayer();
+    scrollToActiveTrack();
   }
 
-  updateVolumeBackground(volumeValue);
-  updateVolumeIcon(volumeValue);
-});
+  if (event.data === YT.PlayerState.ENDED) {
+    syncCurrentIndexFromPlayer();
+  }
+}
 
-muteBtn.addEventListener("click", toggleMute);
+function onPlayerError() {
+  nowPlayingTitle.textContent = "유튜브 재생 오류";
+}
+
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player("youtubePlayer", {
+    width: "220",
+    height: "220",
+    playerVars: {
+      listType: "playlist",
+      list: playlistId,
+      controls: 0,
+      rel: 0,
+      playsinline: 1
+    },
+    events: {
+      onReady: onPlayerReady,
+      onStateChange: onPlayerStateChange,
+      onError: onPlayerError
+    }
+  });
+}
 
 prevBtn.addEventListener("click", playPrevTrack);
 nextBtn.addEventListener("click", playNextTrack);
 playPauseBtn.addEventListener("click", togglePlayPause);
 
-audioPlayer.addEventListener("loadedmetadata", () => {
-  durationEl.textContent = formatTime(audioPlayer.duration);
+volumeBar.addEventListener("input", () => {
+  if (!player) return;
+
+  const volumeValue = Math.round(Number(volumeBar.value) * 100);
+
+  if (volumeValue > 0) {
+    player.unMute();
+    lastVolume = volumeValue;
+  }
+
+  player.setVolume(volumeValue);
+  updateVolumeBackground(volumeBar.value);
+  updateVolumeIcon(volumeBar.value);
 });
 
-audioPlayer.addEventListener("timeupdate", () => {
-  const progress = audioPlayer.duration
-    ? (audioPlayer.currentTime / audioPlayer.duration) * 100
-    : 0;
-
-  progressBar.value = progress;
-  currentTimeEl.textContent = formatTime(audioPlayer.currentTime);
-  updateProgressBackground(progress);
-});
+muteBtn.addEventListener("click", toggleMute);
 
 progressBar.addEventListener("input", () => {
-  if (!audioPlayer.duration) return;
-
-  audioPlayer.currentTime = (Number(progressBar.value) / 100) * audioPlayer.duration;
+  userIsSeeking = true;
   updateProgressBackground(progressBar.value);
 });
 
-audioPlayer.addEventListener("play", () => {
-  updatePlayButton();
-  coverImage.classList.add("playing");
-  
-  coverImage.classList.remove("paused");
+progressBar.addEventListener("change", () => {
+  if (!player) return;
+
+  const duration = player.getDuration();
+  if (!duration || !isFinite(duration)) {
+    userIsSeeking = false;
+    return;
+  }
+
+  const nextTime = (Number(progressBar.value) / 100) * duration;
+  player.seekTo(nextTime, true);
+  userIsSeeking = false;
 });
 
-audioPlayer.addEventListener("pause", () => {
-  updatePlayButton();
-  coverImage.classList.remove("playing");
-  coverImage.classList.add("paused");
-});
+window.addEventListener("beforeunload", stopProgressLoop);
 
-audioPlayer.addEventListener("ended", playNextTrack);
-
-window.addEventListener("load", () => {
-  scrollToActiveTrack();
-});
-
-audioPlayer.volume = 1;
-volumeBar.value = 1;
-
+// 초기 UI
+updateProgressBackground(0);
 updateVolumeBackground(1);
 updateVolumeIcon(1);
-loadTrack(0);
+renderTrackList();
