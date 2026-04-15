@@ -67,7 +67,7 @@ body {
 }
 
 .cover-image {
-  width: 100%;
+  width: 80%;
   max-width: 380px;
   aspect-ratio: 1 / 1;
   object-fit: cover;
@@ -90,7 +90,7 @@ body {
 
 .hero-meta h1 {
   margin: 0;
-  font-size: clamp(25px, 5vw, 58px);
+  font-size: clamp(20px, 5vw, 45px);
   line-height: 1.04;
   letter-spacing: -0.03em;
 }
