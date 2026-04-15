@@ -83,7 +83,7 @@ body {
 .artist {
   margin: 0 0 10px;
   color: var(--accent);
-  font-size: 13px;
+  font-size: 20px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
 }
