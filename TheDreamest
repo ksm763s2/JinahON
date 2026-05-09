@@ -58,7 +58,7 @@
       <div class="player-frame-wrap">
         <iframe
           class="youtube-frame"
-          src="https://youtu.be/yWnbvblXTQ8?si=W9p3qws2HlkGoDRc"
+          src="https://www.youtube.com/embed/yWnbvblXTQ8"
           title="권진아 The Dreamest 유튜브 재생목록"
           loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
